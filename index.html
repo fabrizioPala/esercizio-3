@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .img {
+            margin-bottom: 10px; 
+        }
+    </style>
+    <div class="card">
+        <h1 class="name"></h1>
+        <img src="" alt="Immagine Card" class="img">
+        <input class="input" type="text">
+        <button class="btn">Choose Card</button>
+    </div>
+
+    <script>
+        const card= document.querySelector(".card")
+        const characterName= document.querySelector(".name")
+        const img= document.querySelector(".img")
+        const btn= document.querySelector(".btn")
+        const input=document.querySelector(".input")
+
+        async function fetchApi(){
+            try {
+              const response= await fetch("https://ringsdb.com/api/public/cards/") 
+              const respondeJson= await response.json()
+              const fetchedCard= respondeJson[input.value]
+              characterName.textContent=fetchedCard.name
+              img.setAttribute("src", "https://ringsdb.com" + fetchedCard.imagesrc);
+
+              
+
+            } catch (error) {
+                console.error("There's no card with this number")
+                
+            }
+        
+        }
+    
+        btn.addEventListener("click",fetchApi)
+    </script>
+</body>
+</html>
